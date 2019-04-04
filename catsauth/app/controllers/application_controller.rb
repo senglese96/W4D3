@@ -1,8 +1,20 @@
 class ApplicationController < ActionController::Base
 
+    def req_loggedin
+        if !current_user
+            redirect_to "/cats"
+        end
+    end
+
     def not_loggedin
         if current_user
             redirect_to "/cats"
+        end
+    end
+
+    def owns_cat?
+        unless current_user && current_user.cats.find_by(id: params[:id])
+          redirect_to "/cats"
         end
     end
 

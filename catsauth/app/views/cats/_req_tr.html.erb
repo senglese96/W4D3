@@ -1,7 +1,9 @@
 <tr>
   <td><%= req.start_date %></td>
   <td><%= req.end_date %></td>
+  <td><%= User.find_by(id: req.user_id).user_name %></td>
   <td>
+  <% if current_user && current_user.id == @cat.user_id%>
     <% if req.pending? %>
         <form action="<%= approve_cat_rental_request_url(req) %>" method="post">
           <input
@@ -17,8 +19,12 @@
             value="<%= form_authenticity_token %>">
           <input type="submit" value="Deny">
         </form>
+
+
+    <% end %>
     <% else %>
       <%= req.status %>
     <% end %>
+  
   </td>
 </tr>

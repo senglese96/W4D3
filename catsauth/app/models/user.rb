@@ -19,6 +19,14 @@ class User < ApplicationRecord
 
     after_initialize :create_session_token
 
+    has_many :cat_rental_requests,
+    foreign_key: :user_id,
+    class_name: :CatRentalRequest
+
+    has_many :cats,
+        foreign_key: :user_id,
+        class_name: :Cat
+
     def create_session_token
         self.session_token ||= SecureRandom::urlsafe_base64
     end
